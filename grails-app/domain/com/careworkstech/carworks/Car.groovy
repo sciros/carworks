@@ -8,5 +8,6 @@ class Car {
     //Condition condition
 
     static constraints = {
+        trim nullable: true
     }
 }
