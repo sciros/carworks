@@ -1,18 +1,20 @@
 package com.careworkstech.carworks
 
-
-
+import grails.plugin.springsecurity.SpringSecurityService
 import grails.test.mixin.*
 import spock.lang.*
 
 @TestFor(UserController)
 @Mock(User)
 class UserControllerSpec extends Specification {
+    def setup () {
+        User.metaClass.encodePassword = { -> }
+    }
 
     def populateValidParams(params) {
         assert params != null
-        // TODO: Populate valid properties like...
-        //params["name"] = 'someValidName'
+        params['username'] = 'testUser'
+        params['password'] = 'P4ssw0rd'
     }
 
     void "Test the index action returns the correct model"() {
@@ -49,7 +51,6 @@ class UserControllerSpec extends Specification {
             response.reset()
             populateValidParams(params)
             user = new User(params)
-
             controller.save(user)
 
         then:"A redirect is issued to the show action"
