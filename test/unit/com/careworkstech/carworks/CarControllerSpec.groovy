@@ -1,18 +1,34 @@
 package com.careworkstech.carworks
 
-
-
+import grails.plugin.springsecurity.SpringSecurityService
 import grails.test.mixin.*
 import spock.lang.*
 
 @TestFor(CarController)
 @Mock(Car)
 class CarControllerSpec extends Specification {
+    User testUser
+    SpringSecurityService mockSpringSecurityService
+
+    def setup () {
+        testUser = new User(username: 'testUser',
+                            password: 'testPass',
+                            accountExpired: false,
+                            accountLocked: false,
+                            passwordExpired: false,
+                            id: 1000)
+        mockSpringSecurityService = Mock(SpringSecurityService)
+        controller.springSecurityService = mockSpringSecurityService
+        mockSpringSecurityService.getCurrentUser() >> { testUser } //need here because multiple specs for save
+    }
 
     def populateValidParams(params) {
         assert params != null
-        // TODO: Populate valid properties like...
-        //params["name"] = 'someValidName'
+        params['make'] = 'Subaru'
+        params['model'] = 'Forester'
+        params['trim'] = 'XT'
+        params['year'] = 2014
+        params['user'] = testUser
     }
 
     void "Test the index action returns the correct model"() {
@@ -56,6 +72,20 @@ class CarControllerSpec extends Specification {
             response.redirectedUrl == '/car/show/1'
             controller.flash.message != null
             Car.count() == 1
+    }
+
+    def 'save should set user to be the currently logged in user' () {
+        given: 'a car with no user and a logged in user'
+            Car car = new Car()
+            car.make = 'Subaru'
+            car.model = 'Forester'
+            car.year = 2014
+
+        when: 'save is invoked, passing in the car'
+            controller.save(car)
+
+        then: 'the car has user set to the currently logged in user'
+            car.user == testUser
     }
 
     void "Test that the show action returns the correct model"() {

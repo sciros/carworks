@@ -1,12 +1,12 @@
 package com.careworkstech.carworks
 
-
+import grails.transaction.Transactional
 
 import static org.springframework.http.HttpStatus.*
-import grails.transaction.Transactional
 
 @Transactional(readOnly = true)
 class CarController {
+    def springSecurityService
 
     static allowedMethods = [save: "POST", update: "PUT", delete: "DELETE"]
 
@@ -35,7 +35,10 @@ class CarController {
             return
         }
 
-        carInstance.save flush:true
+        User user = (User) springSecurityService.getCurrentUser()
+        carInstance.user = user
+
+        carInstance.save failOnError: true, flush:true
 
         request.withFormat {
             form multipartForm {
