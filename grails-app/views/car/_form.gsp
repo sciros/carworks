@@ -29,16 +29,6 @@
 
 </div>
 
-<div class="fieldcontain ${hasErrors(bean: carInstance, field: 'user', 'error')} required">
-    <label for="user">
-        <g:message code="car.user.label" default="User"/>
-        <span class="required-indicator">*</span>
-    </label>
-    <g:select id="user" name="user.id" from="${com.careworkstech.carworks.User.list()}" optionKey="id" required=""
-              value="${carInstance?.user?.id}" class="many-to-one"/>
-
-</div>
-
 <div class="fieldcontain ${hasErrors(bean: carInstance, field: 'year', 'error')} required">
     <label for="year">
         <g:message code="car.year.label" default="Year"/>
