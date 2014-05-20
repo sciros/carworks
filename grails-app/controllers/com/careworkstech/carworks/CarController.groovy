@@ -1,10 +1,12 @@
 package com.careworkstech.carworks
 
+import grails.plugin.springsecurity.annotation.Secured
 import grails.transaction.Transactional
 
 import static org.springframework.http.HttpStatus.*
 
 @Transactional(readOnly = true)
+@Secured(['ROLE_USER'])
 class CarController {
     def springSecurityService
 
