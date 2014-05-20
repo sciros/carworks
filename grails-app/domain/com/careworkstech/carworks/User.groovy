@@ -1,7 +1,6 @@
 package com.careworkstech.carworks
 
 class User {
-
     transient springSecurityService
 
     String username
@@ -10,6 +9,8 @@ class User {
     boolean accountExpired
     boolean accountLocked
     boolean passwordExpired
+
+    List cars
 
     static transients = ['springSecurityService']
 

@@ -1,6 +1,5 @@
 package com.careworkstech.carworks
 
-import grails.plugin.springsecurity.SpringSecurityService
 import grails.test.mixin.*
 import spock.lang.*
 

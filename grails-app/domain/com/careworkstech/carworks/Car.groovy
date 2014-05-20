@@ -7,6 +7,8 @@ class Car {
     Integer year
     //Condition condition
 
+    static belongsTo = [user:User]
+
     static constraints = {
         trim nullable: true
     }
