@@ -25,6 +25,11 @@ class CarController {
         respond new Car(params)
     }
 
+    def showForUser(User user) {
+        List<Car> carsForUser = Car.findAllByUser(user)
+        respond carsForUser
+    }
+
     @Transactional
     def save(Car carInstance) {
         if (carInstance == null) {

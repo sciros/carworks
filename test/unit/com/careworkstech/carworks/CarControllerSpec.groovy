@@ -5,18 +5,20 @@ import grails.test.mixin.*
 import spock.lang.*
 
 @TestFor(CarController)
-@Mock(Car)
+@Mock([Car,User])
 class CarControllerSpec extends Specification {
     User testUser
     SpringSecurityService mockSpringSecurityService
 
     def setup () {
+        User.metaClass.encodePassword = { -> }
         testUser = new User(username: 'testUser',
                             password: 'testPass',
                             accountExpired: false,
                             accountLocked: false,
                             passwordExpired: false,
                             id: 1000)
+        testUser.save(flush: true)
         mockSpringSecurityService = Mock(SpringSecurityService)
         controller.springSecurityService = mockSpringSecurityService
         mockSpringSecurityService.getCurrentUser() >> { testUser } //need here because multiple specs for save
@@ -39,6 +41,20 @@ class CarControllerSpec extends Specification {
         then:"The model is correct"
             !model.carInstanceList
             model.carInstanceCount == 0
+    }
+
+    void "showForUser should return a list of cars belong to the user given the user id" () {
+        given: 'a car exists for a test user'
+            Car car = new Car(make: 'BMW', model: '550i', year: 2013, user: testUser)
+            car.save(failOnError: true, flush: true)
+            Car car2 = new Car(make: 'Mercedes', model: 'CLA45AMG', year: 2014, user: testUser)
+            car2.save(failOnError: true, flush: true)
+
+        when: 'showForUser is invoked for the test user'
+            controller.showForUser(testUser)
+
+        then: 'the model contains a list of cars belonging to the test user'
+            model.carInstanceList.all.size == 2
     }
 
     void "Test the create action returns the correct model"() {
