@@ -18,11 +18,11 @@
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown">User <b class="caret"></b></a>
                     <ul class="dropdown-menu">
                         <sec:ifLoggedIn>
-                            <li><a href="user/show/${sec.loggedInUserInfo(field: 'id')}">My Account</a></li>
+                            <li><g:link controller="user" action="show" id="${sec.loggedInUserInfo(field: 'id')}">My Account</g:link></li>
                             <li><g:link controller="logout">Logout</g:link></li>
                         </sec:ifLoggedIn>
                         <sec:ifNotLoggedIn>
-                            <li><a href="login">Login</a></li>
+                            <li><g:link controller="login">Login</g:link></li>
                             <li><g:link controller="user" action="create">Register</g:link></li>
                         </sec:ifNotLoggedIn>
                     </ul>
@@ -31,9 +31,9 @@
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown">Cars <b class="caret"></b></a>
                     <ul class="dropdown-menu">
                         <sec:ifLoggedIn>
-                            <li><a href="car/showForUser/${sec.loggedInUserInfo(field: 'id')}">My Cars</a></li>
+                            <li><g:link controller="car" action="showForUser" id="${sec.loggedInUserInfo(field: 'id')}">My Cars</g:link></li>
                         </sec:ifLoggedIn>
-                        <li><a href="car">All Cars</a></li>
+                        <li><g:link controller="car" action="index">All Cars</g:link></li>
                     </ul>
                 </li>
             </ul>
