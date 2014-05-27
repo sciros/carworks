@@ -34,14 +34,13 @@ class CarController {
 
         User user = (User) springSecurityService.getCurrentUser()
         carInstance.user = user
-        carInstance.clearErrors()
 
         if (carInstance.hasErrors()) {
             respond carInstance.errors, view:'create'
             return
         }
 
-        carInstance.save failOnError: true, flush:true
+        carInstance.save flush:true
 
         request.withFormat {
             form multipartForm {
