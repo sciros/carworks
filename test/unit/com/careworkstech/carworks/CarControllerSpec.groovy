@@ -30,6 +30,7 @@ class CarControllerSpec extends Specification {
         params['model'] = 'Forester'
         params['trim'] = 'XT'
         params['year'] = 2014
+        params['condition'] = Condition.NEW
         params['user'] = testUser
     }
 
@@ -45,9 +46,9 @@ class CarControllerSpec extends Specification {
 
     void "showForUser should return a list of cars belong to the user given the user id" () {
         given: 'a car exists for a test user'
-            Car car = new Car(make: 'BMW', model: '550i', year: 2013, user: testUser)
+            Car car = new Car(make: 'BMW', model: '550i', year: 2013, user: testUser, condition: Condition.DECENT)
             car.save(failOnError: true, flush: true)
-            Car car2 = new Car(make: 'Mercedes', model: 'CLA45AMG', year: 2014, user: testUser)
+            Car car2 = new Car(make: 'Mercedes', model: 'CLA45AMG', year: 2014, user: testUser, condition: Condition.NEW)
             car2.save(failOnError: true, flush: true)
 
         when: 'showForUser is invoked for the test user'
