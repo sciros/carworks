@@ -39,6 +39,8 @@ class CarController {
 
         User user = (User) springSecurityService.getCurrentUser()
         carInstance.user = user
+        carInstance.clearErrors()
+        carInstance.validate()
 
         if (carInstance.hasErrors()) {
             respond carInstance.errors, view:'create'
