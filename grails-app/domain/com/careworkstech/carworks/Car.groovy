@@ -5,7 +5,7 @@ class Car {
     String model
     String trim
     Integer year
-    //Condition condition
+    Condition condition
 
     static belongsTo = [user:User]
 

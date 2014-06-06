@@ -19,6 +19,7 @@
             <g:sortableColumn property="make" title="${message(code: 'car.make.label', default: 'Make')}"/>
             <g:sortableColumn property="model" title="${message(code: 'car.model.label', default: 'Model')}"/>
             <g:sortableColumn property="year" title="${message(code: 'car.year.label', default: 'Year')}"/>
+            <g:sortableColumn property="condition" title="${message(code: 'car.condition.label', default: 'Condition')}"/>
         </tr>
         </thead>
         <tbody>
@@ -28,6 +29,7 @@
                 <td>${fieldValue(bean: carInstance, field: "make")}</td>
                 <td>${fieldValue(bean: carInstance, field: "model")}</td>
                 <td>${fieldValue(bean: carInstance, field: "year")}</td>
+                <td>${fieldValue(bean: carInstance, field: "condition")}</td>
             </tr>
         </g:each>
         </tbody>

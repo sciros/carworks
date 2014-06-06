@@ -1,4 +1,5 @@
 import com.careworkstech.carworks.Car
+import com.careworkstech.carworks.Condition
 import com.careworkstech.carworks.Role
 import com.careworkstech.carworks.User
 import com.careworkstech.carworks.UserRole
@@ -41,7 +42,8 @@ class BootStrap {
                 make: 'Chevrolet',
                 model: 'Corvette',
                 trim: 'Z51',
-                year: 2014
+                year: 2014,
+                condition: Condition.NEW
         ).save(failOnError: true)
 
     }

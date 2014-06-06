@@ -1,4 +1,4 @@
-<%@ page import="com.careworkstech.carworks.Car" %>
+<%@ page import="com.careworkstech.carworks.Condition; com.careworkstech.carworks.Car" %>
 
 
 <table class="table table-bordered">
@@ -50,6 +50,19 @@
         <td>
             <div class="fieldcontain ${hasErrors(bean: carInstance, field: 'year', 'error')} required">
                 <g:field name="year" type="number" value="${carInstance.year}" required=""/>
+            </div>
+        </td>
+    </tr>
+    <tr>
+        <td>
+            <label for="condition">
+                <g:message code="car.condition.label" default="Condition"/>
+                <span class="required-indicator">*</span>
+            </label>
+        </td>
+        <td>
+            <div class="fieldcontain ${hasErrors(bean: carInstance, field: 'condition', 'error')} required">
+                <g:select name="condition" from="${Condition.values()}"/>
             </div>
         </td>
     </tr>
