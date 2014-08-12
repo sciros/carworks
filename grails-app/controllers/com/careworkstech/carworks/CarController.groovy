@@ -28,6 +28,8 @@ class CarController {
     def showForUser(User user) {
         List<Car> carsForUser = Car.findAllByUser(user)
         respond carsForUser
+        //better: remove showForUser.gsp and just point back to index
+        //render view:'index', model:[carInstanceList:Car.findAllByUser(user)]
     }
 
     @Transactional

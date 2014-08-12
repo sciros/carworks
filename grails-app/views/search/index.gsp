@@ -19,7 +19,7 @@
             <g:field type="number" name="year"/>
         </fieldset>
         <fieldset class="buttons">
-            <g:submitButton name="create" class="btn btn-primary"
+            <g:submitButton name="search" class="btn btn-primary"
                             value="${message(code: 'button.search.label', default: 'Search')}"/>
         </fieldset>
     </g:form>
