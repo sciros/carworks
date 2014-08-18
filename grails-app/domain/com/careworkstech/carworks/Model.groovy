@@ -11,4 +11,8 @@ class Model {
         table 'car_model'
         id column: 'car_model_id'
     }
+
+    String toString () {
+        name
+    }
 }

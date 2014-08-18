@@ -6,4 +6,8 @@ class Trim {
 
     static constraints = {
     }
+
+    String toString () {
+        name
+    }
 }
