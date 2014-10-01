@@ -1,0 +1,53 @@
+CREATING CONTROLLERS FOR THE DOMAIN OBJECTS
+
+1) create controller for Car
+  a) grails create-controller com.careworkstech.carworks.Car
+  b) scaffold it just to show how that works and how quickly a CRUD app can be stood up
+    i) static scaffold = true
+    ii) scaffolding is a plugin as of grails 2.3
+    iii) scaffolding isn't typically done for production apps since it is so simplistic
+  c) grails run-app and play around with the UI and make some car records
+    i) they'll get cleared upon app restart anyway
+  d) seems you can't... because there are no Models yet
+
+2) create controller for Model and scaffold it
+  a) grails create-scaffold-controller com.careworkstech.carworks.Model
+  b) it automatically added static scaffold = true
+
+3) create controller for Make and scaffold it
+  a) grails create-scaffold-controller com.careworkstech.carworks.Make
+
+4) create controller for Trim as well
+  a) grails create-scaffold-controller com.careworkstech.carworks.Trim
+
+5) delete the generated Spec files for now (we'll come back to those later)
+
+6) check out the scaffolded controllers and use them to make some data
+  a) go to the MakeController and create a Make - 'Chevrolet'
+  b) go to the ModelController and create A Model - 'Corvette'
+    i) notice that the Make select is showing "com...Make:1" instead of "Chevrolet"
+    ii) we need to create a toString method to make these less awful
+    iii)
+
+    String toString () {
+        name
+    }
+
+7) go over groovy's method signatures (def vs type) and return statements
+ 
+8) add toString methods to other domain classes real quick (Make, Model, Trim, Car)
+  a) for Car can get fancy
+    String toString () {
+      model.make.toString() + ' ' + model.toString() + ' ' + trim.toString() + ' ' + id.toString()
+    }
+  b) if you do, might want to make it avoid NPEs by adding question marks (shorthand null checks)
+    model?.make?.toString()
+
+9) also when creating a Car, notice that mileage is required but there's no default
+  a) give it a default in the domain class
+  b) Integer mileage = 0
+
+10) if DataSource keeps disappearing then you might want to change from 'create-drop' to 'create'
+
+THAT IS GOOD FOR SNAPSHOT 2
+(NEXT WE WILL LOOK AT CONFIGURATION AND BOOTSTRAPPING DATA)

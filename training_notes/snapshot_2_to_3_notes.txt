@@ -1,0 +1,52 @@
+LOOKING AT APP CONFIGURATION AND BOOSTRAPPING SOME DATA
+
+1) let's look at the grails-app/conf folder a bit more closely
+  a) there are several .groovy configuration files in the folder which are used to set the app up either during build or during runtime
+
+2) BuildConfig.groovy is for building the application.
+  a) list dependencies such as shared or 3rd party libraries (jars)
+  b) list Grails plugins as well (these are typically zipped)
+  c) dependencies managed by either Maven or Ivy under the hood as far as engines
+  d) there's a lot more going on here -- it forks the JVM for running the app
+  e) it lists other setup as far as what files end up where
+
+3) Config.groovy is for runtime configuration (once app is running or is starting up)
+  a) configuration of plugins is typically done here as well through some properties they expose
+  b) caching configuration, logging configuration, etc. is also here
+
+4) UrlMappings.groovy is for mapping routes that are not conventional (if you stray from convention of REST mappings etc. you may have to tweak this file)
+
+5) DataSource.groovy is for declaring and configuring data sources
+  a) this file is the one we tweaked slightly for the last snapshot
+  b) note that the configuration (same as in other files) is environment-specific
+    i) development, test, production are the defaults (you can add others, e.g. 'ci')
+    ii) very often you'll use an in-memory database such as H2 or sqlite for dev
+    iii) in production you may just define a datasource to be discoverable via JNDI
+    iv) other stuff like dialect and adapter are configured here too
+    v) as well as Hibernate settings (at the top)
+
+6) now let's talk about data setup. It is a pain to keep re-creating data just for even
+the most rudimentary testing. So let's write some code that will make the application create some data for us on startup.
+  a) this is a kind of 'bootstrapping'
+  b) this is where BootStrap.groovy comes in -- another file that is run differently in different environments
+
+7) let's create a Make, Model, Trim, and Car and save them in BootStrap.
+  a) you can play around and make multiples of course
+        Make subaru = Make.findByName('Subaru') ?: new Make(name: 'Subaru').save(failOnError: true)
+        Make chevrolet = Make.findByName('Chevrolet') ?: new Make(name: 'Chevrolet').save(failOnError: true)
+
+        Model forester = Model.findByName('Forester') ?: new Model(make: subaru, name: 'Forester').save()
+        Model corvette_stingray = Model.findByName('Corvette Stingray') ?: new Model(make: chevrolet, name: 'Corvette Stingray').save()
+
+        Trim xt = Trim.findByName('XT') ?: new Trim(model: forester, name: 'XT').save()
+        Trim z51_1lt = Trim.findByName('Z51 1LT') ?: new Trim(model: corvette_stingray, name: 'Z51 1LT').save()
+
+        Car car1 = Car.findByTrim(xt) ?: new Car(model: forester, trim: xt, mileage: 18500, price: 31000).save()
+        Car car2 = Car.findByTrim(z51_1lt) ?: new Car(model: corvette_stingray, trim: z51_1lt, mileage: 30, price: 65000).save()
+
+  b) re-start the application and navigate to CarController -- should see the cars we just created
+  c) there are a few things that seem "off" about this list. 
+    i) One is the order of columns.
+    ii) Two is that the "trim" (optional!) links to each individual car. 
+
+We will tackle that next. With a model and bootstrapped data ready, we can look at writing real controllers instead of relying on scaffolded ones.

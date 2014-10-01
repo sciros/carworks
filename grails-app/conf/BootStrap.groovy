@@ -16,7 +16,7 @@ class BootStrap {
                 Trim z51_1lt = Trim.findByName('Z51 1LT') ?: new Trim(model: corvette_stingray, name: 'Z51 1LT').save()
 
                 Car car1 = Car.findByTrim(xt) ?: new Car(model: forester, trim: xt, mileage: 18500, price: 31000).save()
-                Car car2 = Car.findByTrim(z51_1lt) ?: new Car(model: corvette_stingray, trim: z51_1lt, mileage: 30, price: 65000).save()
+                Car car2 = Car.findByTrim(z51_1lt) ?: new Car(model: corvette_stingray, trim: z51_1lt, mileage: 500, price: 65000).save()
     }
     def destroy = {
     }
